@@ -24,7 +24,7 @@ android {
         minSdkVersion(Versions.Android.minSdk)
         targetSdkVersion(Versions.Android.targetSdk)
 
-        applicationId = "org.example.app"
+        applicationId = "dev.icerock.codelab.giphy"
 
         versionCode = 1
         versionName = "0.1.0"
