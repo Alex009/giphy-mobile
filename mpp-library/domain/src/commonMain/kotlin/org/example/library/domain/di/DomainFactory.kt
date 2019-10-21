@@ -11,7 +11,7 @@ import dev.icerock.moko.network.exceptionfactory.parser.ErrorExceptionParser
 import dev.icerock.moko.network.exceptionfactory.parser.ValidationExceptionParser
 import dev.icerock.moko.network.features.ExceptionFeature
 import dev.icerock.moko.network.features.TokenFeature
-import dev.icerock.moko.network.generated.apis.NewsApi
+import dev.icerock.moko.network.generated.apis.GifsApi
 import io.ktor.client.HttpClient
 import io.ktor.client.features.logging.LogLevel
 import io.ktor.client.features.logging.Logger
@@ -19,7 +19,7 @@ import io.ktor.client.features.logging.Logging
 import io.ktor.http.HttpStatusCode
 import kotlinx.serialization.json.Json
 import org.example.library.domain.repository.ConfigRepository
-import org.example.library.domain.repository.NewsRepository
+import org.example.library.domain.repository.GifRepository
 import org.example.library.domain.storage.KeyValueStorage
 
 class DomainFactory(
@@ -63,18 +63,17 @@ class DomainFactory(
         }
     }
 
-    private val newsApi: NewsApi by lazy {
-        NewsApi(
+    private val gifsApi: GifsApi by lazy {
+        GifsApi(
             basePath = baseUrl,
             httpClient = httpClient,
             json = json
         )
     }
 
-    val newsRepository: NewsRepository by lazy {
-        NewsRepository(
-            newsApi = newsApi,
-            keyValueStorage = keyValueStorage
+    val gifRepository: GifRepository by lazy {
+        GifRepository(
+            gifsApi = gifsApi
         )
     }
 

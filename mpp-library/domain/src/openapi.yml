@@ -1,232 +1,696 @@
-openapi: 3.0.0
+swagger: '2.0'
+schemes:
+  - https
+host: api.giphy.com
+basePath: /v1
 info:
-  title: News API
-  version: v2
-servers: 
-  - url: https://newsapi.org/v2
-    description: live
+  contact:
+    email: support@giphy.com
+  description: Giphy API
+  termsOfService: 'https://developers.giphy.com/'
+  title: Giphy
+  version: '1.0'
+  x-apisguru-categories:
+    - media
+  x-logo:
+    url: 'https://api.apis.guru/v2/cache/logo/https_twitter.com_GIPHY_profile_image.png'
+  x-origin:
+    - format: swagger
+      url: 'https://raw.githubusercontent.com/faragorn/open-api-specs/master/specs/giphy_api/1.0/index.yml'
+      version: '2.0'
+  x-preferred: true
+  x-providerName: giphy.com
+externalDocs:
+  description: Official Giphy Documentation
+  url: 'https://developers.giphy.com/docs/'
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  api_key:
+    in: query
+    name: api_key
+    type: apiKey
+security:
+  - api_key: []
+parameters:
+  gifId:
+    description: Filters results by specified GIF ID.
+    format: int32
+    in: path
+    name: gifId
+    required: true
+    type: integer
+  gifIds:
+    description: 'Filters results by specified GIF IDs, separated by commas.'
+    in: query
+    name: ids
+    type: string
+  lang:
+    description: Specify default language for regional content; use a 2-letter ISO 639-1 language code.
+    in: query
+    name: lang
+    type: string
+  limit:
+    default: 25
+    description: The maximum number of records to return.
+    format: int32
+    in: query
+    name: limit
+    type: integer
+  offset:
+    default: 0
+    description: An optional results offset.
+    format: int32
+    in: query
+    name: offset
+    type: integer
+  query:
+    description: Search query term or prhase.
+    in: query
+    name: q
+    required: true
+    type: string
+  rating:
+    description: Filters results by specified rating.
+    in: query
+    name: rating
+    type: string
+  tag:
+    description: Filters results by specified tag.
+    in: query
+    name: tag
+    type: string
+  term:
+    description: Search term.
+    in: query
+    name: s
+    required: true
+    type: string
+responses:
+  BadRequest:
+    description: Your request was formatted incorrectly or missing required parameters.
+  Forbidden:
+    description: You weren't authorized to make your request; most likely this indicates an issue with your API Key.
+  NotFound:
+    description: 'The particular GIF you are requesting was not found. This occurs, for example, if you request a GIF by an id that does not exist.'
+  TooManyRequests:
+    description: |
+      Your API Key is making too many requests. Read about [requesting a Production Key](https://developers.giphy.com/docs/#access) to upgrade your API Key rate limits.
+tags:
+  - name: gifs
+  - name: stickers
 paths:
-  /top-headlines:
+  /gifs:
     get:
-      tags:
-        - news
-      summary: 'live top and breaking headlines'
       description: |
-        This endpoint provides live top and breaking headlines for a country, specific category in a country, single source, or multiple sources. You can also search with keywords. Articles are sorted by the earliest date published first. 
-      
-        This endpoint is great for retrieving headlines for display on news tickers or similar.
-      parameters: 
-        - name: country
-          in: query
-          description: The 2-letter ISO 3166-1 code of the country you want to get headlines for.
-          required: false
-          schema:
-            type: string
-            enum: 
-              - ae
-              - ar
-              - at
-              - au
-              - be
-              - bg 
-              - br
-              - ca
-              - ch
-              - cn
-              - co
-              - cu
-              - cz
-              - de
-              - eg
-              - fr
-              - gb
-              - gr
-              - hk
-              - hu
-              - id
-              - ie
-              - il
-              - in
-              - it
-              - jp
-              - kr
-              - lt
-              - lv
-              - ma
-              - mx
-              - my
-              - ng
-              - nl
-              - no
-              - nz
-              - ph
-              - pl
-              - pt
-              - ro
-              - rs
-              - ru
-              - sa
-              - se
-              - sg
-              - si
-              - sk
-              - th
-              - tr
-              - tw
-              - ua
-              - us
-              - ve
-              - za
-        - name: category
-          in: query
-          description: The category you want to get headlines for
-          required: false
-          schema:
-            type: string
-            enum: 
-            - business
-            - entertainment
-            - general
-            - health
-            - science
-            - sports
-            - technology
-        - name: q
-          in: query
-          schema:
-            type: string
-          description: Keywords or a phrase to search for
-          required: false
-          example: android
-        - name: pageSize
-          in: query
-          required: false
-          schema:
-            type: integer
-          description: The number of results to return per page (request). 20 is the default, 100 is the maximum.
-          example: 20
-        - name: page
-          in: query
-          required: false
-          schema:
-            type: integer
-          description: Use this to page through the results if the total results found is greater than the page size.
-      security: 
-        - bearerAuth: []
+        A multiget version of the get GIF by ID endpoint.
+      operationId: getGifsById
+      parameters:
+        - $ref: '#/parameters/gifIds'
       responses:
         '200':
-          description: ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TopHeadlinesResponse'
+          description: ''
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/Gif'
+                type: array
+              meta:
+                $ref: '#/definitions/Meta'
+              pagination:
+                $ref: '#/definitions/Pagination'
+            type: object
         '400':
-          description: 'Bad request'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'
-components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-  schemas:
-    BadRequest:
-      properties:
-        status:
-          description: >
-            If the request was successful or not. 
-            Options: ok, error. In the case of error a code and message property will be populated.
-          type: string
-          enum: [ok, error]
-          example: error
-        code:
-          type: string
-          example: parametersMissing
-        message:
-          type: string
-          example: >
-            Required parameters are missing. Please set any of the following parameters and try again: sources, q, language, country, category.
-      required: 
-        - status
-        - code
-        - message
-    TopHeadlinesResponse:
-      properties:
-        status:
-          description: >
-            If the request was successful or not. 
-            Options: ok, error. In the case of error a code and message property will be populated.
-          type: string
-          enum: [ok, error]
-          example: ok
-        totalResults:
-          type: integer
-          description: The total number of results available for your request.
-        articles:
-          type: array
-          items:
-            $ref: '#/components/schemas/Article'
-      required: 
-        - status
-        - totalResults
-        - articles
-      type: object
-    Article:
-      type: object
-      properties:
-        source:
-          $ref: '#/components/schemas/Source'
-        author:
-          type: string
-          description: The author of the article
-          example: Stephen King
-        title:
-          type: string
-          description: The headline or title of the article.
-          example: The Dark Tower
-        description:
-          type: string
-          description: A description or snippet from the article.
-          example: The Dark Tower is a series of eight books and one short story written by American author Stephen King that incorporate themes from multiple genres.
-        url:
-          type: string
-          description: The direct URL to the article.
-          example: https://en.wikipedia.org/wiki/The_Dark_Tower_(series)
-        urlToImage:
-          type: string
-          description: The URL to a relevant image for the article.
-          example: https://upload.wikimedia.org/wikipedia/en/5/54/Thedarktower7.jpg
-        publishedAt:
-          type: string
-          format: date-time
-          description: The date and time that the article was published, in UTC (+000)
-        content:
-          type: string
-          description: The unformatted content of the article, where available. This is truncated to 260 chars for Developer plan users.
-          example: >
-            The series was chiefly inspired by the poem "Childe Roland to the Dark Tower Came" by Robert Browning, whose full text was included in the final volume's appendix. In the preface to the revised 2003 edition of The Gunslinger, King also identifies The Lord of the Rings, Arthurian Legend, and The Good, the Bad and the Ugly as inspirations. He identifies Clint Eastwood's "Man with No Name" character as one of the major inspirations for the protagonist, Roland Deschain. King's style of location names in the series, such as Mid-World, and his development of a unique language abstract to our own (High Speech), are also influenced by J. R. R. Tolkien's work.
-      required: 
-        - source
-        - title
-        - url
-        - publishedAt
-    Source:
-      type: object
-      properties:
-        id:
-          type: string
-          example: wiki
-        name:
-          type: string
-          example: Wikipedia
-      required: 
-        - name
-  parameters:
-    Authorization:
-      name: Authorization
-      in: header
-      required: true
-      schema:
+          $ref: '#/responses/BadRequest'
+        '403':
+          $ref: '#/responses/Forbidden'
+        '404':
+          $ref: '#/responses/NotFound'
+        '429':
+          $ref: '#/responses/TooManyRequests'
+      summary: Get GIFs by ID
+      tags:
+        - gifs
+  /gifs/random:
+    get:
+      description: |
+        Returns a random GIF, limited by tag. Excluding the tag parameter will return a random GIF from the GIPHY catalog.
+      operationId: randomGif
+      parameters:
+        - $ref: '#/parameters/tag'
+        - $ref: '#/parameters/rating'
+      responses:
+        '200':
+          description: ''
+          schema:
+            properties:
+              data:
+                $ref: '#/definitions/Gif'
+              meta:
+                $ref: '#/definitions/Meta'
+            type: object
+        '400':
+          $ref: '#/responses/BadRequest'
+        '403':
+          $ref: '#/responses/Forbidden'
+        '404':
+          $ref: '#/responses/NotFound'
+        '429':
+          $ref: '#/responses/TooManyRequests'
+      summary: Random GIF
+      tags:
+        - gifs
+  /gifs/search:
+    get:
+      description: |
+        Search all GIPHY GIFs for a word or phrase. Punctuation will be stripped and ignored.  Use a plus or url encode for phrases. Example paul+rudd, ryan+gosling or american+psycho.
+      operationId: searchGifs
+      parameters:
+        - $ref: '#/parameters/query'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/rating'
+        - $ref: '#/parameters/lang'
+      responses:
+        '200':
+          description: Search results
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/Gif'
+                type: array
+              meta:
+                $ref: '#/definitions/Meta'
+              pagination:
+                $ref: '#/definitions/Pagination'
+            type: object
+        '400':
+          $ref: '#/responses/BadRequest'
+        '403':
+          $ref: '#/responses/Forbidden'
+        '404':
+          $ref: '#/responses/NotFound'
+        '429':
+          $ref: '#/responses/TooManyRequests'
+      summary: Search GIFs
+      tags:
+        - gifs
+  /gifs/translate:
+    get:
+      description: |
+        The translate API draws on search, but uses the GIPHY `special sauce` to handle translating from one vocabulary to another. In this case, words and phrases to GIF
+      operationId: translateGif
+      parameters:
+        - $ref: '#/parameters/term'
+      responses:
+        '200':
+          description: ''
+          schema:
+            properties:
+              data:
+                $ref: '#/definitions/Gif'
+              meta:
+                $ref: '#/definitions/Meta'
+            type: object
+        '400':
+          $ref: '#/responses/BadRequest'
+        '403':
+          $ref: '#/responses/Forbidden'
+        '404':
+          $ref: '#/responses/NotFound'
+        '429':
+          $ref: '#/responses/TooManyRequests'
+      summary: Translate phrase to GIF
+      tags:
+        - gifs
+  /gifs/trending:
+    get:
+      description: |
+        Fetch GIFs currently trending online. Hand curated by the GIPHY editorial team.  The data returned mirrors the GIFs showcased on the GIPHY homepage. Returns 25 results by default.
+      operationId: trendingGifs
+      parameters:
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/rating'
+      responses:
+        '200':
+          description: ''
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/Gif'
+                type: array
+              meta:
+                $ref: '#/definitions/Meta'
+              pagination:
+                $ref: '#/definitions/Pagination'
+            type: object
+        '400':
+          $ref: '#/responses/BadRequest'
+        '403':
+          $ref: '#/responses/Forbidden'
+        '404':
+          $ref: '#/responses/NotFound'
+        '429':
+          $ref: '#/responses/TooManyRequests'
+      summary: Trending GIFs
+      tags:
+        - gifs
+  '/gifs/{gifId}':
+    get:
+      description: |
+        Returns a GIF given that GIF's unique ID
+      operationId: getGifById
+      parameters:
+        - $ref: '#/parameters/gifId'
+      responses:
+        '200':
+          description: ''
+          schema:
+            properties:
+              data:
+                $ref: '#/definitions/Gif'
+              meta:
+                $ref: '#/definitions/Meta'
+            type: object
+        '400':
+          $ref: '#/responses/BadRequest'
+        '403':
+          $ref: '#/responses/Forbidden'
+        '404':
+          $ref: '#/responses/NotFound'
+        '429':
+          $ref: '#/responses/TooManyRequests'
+      summary: Get GIF by Id
+      tags:
+        - gifs
+  /stickers/random:
+    get:
+      description: |
+        Returns a random GIF, limited by tag. Excluding the tag parameter will return a random GIF from the GIPHY catalog.
+      operationId: randomSticker
+      parameters:
+        - $ref: '#/parameters/tag'
+        - $ref: '#/parameters/rating'
+      responses:
+        '200':
+          description: ''
+          schema:
+            properties:
+              data:
+                $ref: '#/definitions/Gif'
+              meta:
+                $ref: '#/definitions/Meta'
+            type: object
+        '400':
+          $ref: '#/responses/BadRequest'
+        '403':
+          $ref: '#/responses/Forbidden'
+        '404':
+          $ref: '#/responses/NotFound'
+        '429':
+          $ref: '#/responses/TooManyRequests'
+      summary: Random Sticker
+      tags:
+        - stickers
+  /stickers/search:
+    get:
+      description: |
+        Replicates the functionality and requirements of the classic GIPHY search, but returns animated stickers rather than GIFs.
+      operationId: searchStickers
+      parameters:
+        - $ref: '#/parameters/query'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/rating'
+        - $ref: '#/parameters/lang'
+      responses:
+        '200':
+          description: Search results
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/Gif'
+                type: array
+              meta:
+                $ref: '#/definitions/Meta'
+              pagination:
+                $ref: '#/definitions/Pagination'
+            type: object
+        '400':
+          $ref: '#/responses/BadRequest'
+        '403':
+          $ref: '#/responses/Forbidden'
+        '404':
+          $ref: '#/responses/NotFound'
+        '429':
+          $ref: '#/responses/TooManyRequests'
+      summary: Search Stickers
+      tags:
+        - stickers
+  /stickers/translate:
+    get:
+      description: |
+        The translate API draws on search, but uses the GIPHY `special sauce` to handle translating from one vocabulary to another. In this case, words and phrases to GIFs.
+      operationId: translateSticker
+      parameters:
+        - $ref: '#/parameters/term'
+      responses:
+        '200':
+          description: ''
+          schema:
+            properties:
+              data:
+                $ref: '#/definitions/Gif'
+              meta:
+                $ref: '#/definitions/Meta'
+            type: object
+        '400':
+          $ref: '#/responses/BadRequest'
+        '403':
+          $ref: '#/responses/Forbidden'
+        '404':
+          $ref: '#/responses/NotFound'
+        '429':
+          $ref: '#/responses/TooManyRequests'
+      summary: Translate phrase to Sticker
+      tags:
+        - stickers
+  /stickers/trending:
+    get:
+      description: |
+        Fetch Stickers currently trending online. Hand curated by the GIPHY editorial team. Returns 25 results by default.
+      operationId: trendingStickers
+      parameters:
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/rating'
+      responses:
+        '200':
+          description: ''
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/Gif'
+                type: array
+              meta:
+                $ref: '#/definitions/Meta'
+              pagination:
+                $ref: '#/definitions/Pagination'
+            type: object
+        '400':
+          $ref: '#/responses/BadRequest'
+        '403':
+          $ref: '#/responses/Forbidden'
+        '404':
+          $ref: '#/responses/NotFound'
+        '429':
+          $ref: '#/responses/TooManyRequests'
+      summary: Trending Stickers
+      tags:
+        - stickers
+definitions:
+  Gif:
+    properties:
+      bitly_url:
+        description: The unique bit.ly URL for this GIF
+        example: 'http://gph.is/1gsWDcL'
         type: string
+      content_url:
+        description: Currently unused
+        type: string
+      create_datetime:
+        description: The date this GIF was added to the GIPHY database.
+        example: '2013-08-01 12:41:48'
+        format: date-time
+        type: string
+      embded_url:
+        description: A URL used for embedding this GIF
+        example: 'http://giphy.com/embed/YsTs5ltWtEhnq'
+        type: string
+      featured_tags:
+        description: |
+          An array of featured tags for this GIF (Note: Not available when using the Public Beta Key)
+        items:
+          description: Tag name
+          type: string
+        type: array
+      id:
+        description: This GIF's unique ID
+        example: YsTs5ltWtEhnq
+        type: string
+      images:
+        description: An object containing data for various available formats and sizes of this GIF.
+        properties:
+          downsized:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding a version of this GIF downsized to be under 2mb.
+          downsized_large:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding a version of this GIF downsized to be under 8mb.
+          downsized_medium:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding a version of this GIF downsized to be under 5mb.
+          downsized_small:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding a version of this GIF downsized to be under 200kb.
+          downsized_still:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding a static preview image of the downsized version of this GIF.
+          fixed_height:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding versions of this GIF with a fixed height of 200 pixels. Good for mobile use.
+          fixed_height_downsampled:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding versions of this GIF with a fixed height of 200 pixels and the number of frames reduced to 6.
+          fixed_height_small:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding versions of this GIF with a fixed height of 100 pixels. Good for mobile keyboards.
+          fixed_height_small_still:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding a static image of this GIF with a fixed height of 100 pixels.
+          fixed_height_still:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding a static image of this GIF with a fixed height of 200 pixels.
+          fixed_width:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding versions of this GIF with a fixed width of 200 pixels. Good for mobile use.
+          fixed_width_downsampled:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding versions of this GIF with a fixed width of 200 pixels and the number of frames reduced to 6.
+          fixed_width_small:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding versions of this GIF with a fixed width of 100 pixels. Good for mobile keyboards.
+          fixed_width_small_still:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding a static image of this GIF with a fixed width of 100 pixels.
+          fixed_width_still:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding a static image of this GIF with a fixed width of 200 pixels.
+          looping:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding a version of this GIF set to loop for 15 seconds.
+          original:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding the original version of this GIF. Good for desktop use.
+          original_still:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding a static preview image of the original GIF.
+          preview:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding a version of this GIF in .MP4 format limited to 50kb that displays the first 1-2 seconds of the GIF.
+          preview_gif:
+            allOf:
+              - $ref: '#/definitions/Image'
+              - description: Data surrounding a version of this GIF limited to 50kb that displays the first 1-2 seconds of the GIF.
+        type: object
+      import_datetime:
+        description: The creation or upload date from this GIF's source.
+        example: '2013-08-01 12:41:48'
+        format: date-time
+        type: string
+      rating:
+        description: 'The MPAA-style rating for this content. Examples include Y, G, PG, PG-13 and R'
+        example: g
+        type: string
+      slug:
+        description: The unique slug used in this GIF's URL
+        example: confused-flying-YsTs5ltWtEhnq
+        type: string
+      source:
+        description: The page on which this GIF was found
+        example: 'http://www.reddit.com/r/reactiongifs/comments/1xpyaa/superman_goes_to_hollywood/'
+        type: string
+      source_post_url:
+        description: The URL of the webpage on which this GIF was found.
+        example: 'http://cheezburger.com/5282328320'
+        type: string
+      source_tld:
+        description: The top level domain of the source URL.
+        example: cheezburger.com
+        type: string
+      tags:
+        description: |
+          An array of tags for this GIF (Note: Not available when using the Public Beta Key)
+        items:
+          description: Tag name
+          type: string
+        type: array
+      trending_datetime:
+        description: 'The date on which this gif was marked trending, if applicable.'
+        example: '2013-08-01 12:41:48'
+        format: date-time
+        type: string
+      type:
+        default: gif
+        description: 'Type of the gif. By default, this is almost always gif'
+        enum:
+          - gif
+        type: string
+      update_datetime:
+        description: The date on which this GIF was last updated.
+        example: '2013-08-01 12:41:48'
+        format: date-time
+        type: string
+      url:
+        description: The unique URL for this GIF
+        example: 'http://giphy.com/gifs/confused-flying-YsTs5ltWtEhnq'
+        type: string
+      user:
+        $ref: '#/definitions/User'
+      username:
+        description: 'The username this GIF is attached to, if applicable'
+        example: JoeCool4000
+        type: string
+    type: object
+  Image:
+    properties:
+      frames:
+        description: The number of frames in this GIF.
+        example: '15'
+        type: string
+      height:
+        description: The height of this GIF in pixels.
+        example: '200'
+        type: string
+      mp4:
+        description: The URL for this GIF in .MP4 format.
+        example: 'https://media1.giphy.com/media/cZ7rmKfFYOvYI/giphy.mp4'
+        type: string
+      mp4_size:
+        description: The size in bytes of the .MP4 file corresponding to this GIF.
+        example: '25123'
+        type: string
+      size:
+        description: The size of this GIF in bytes.
+        example: '32381'
+        type: string
+      url:
+        description: The publicly-accessible direct URL for this GIF.
+        example: 'https://media1.giphy.com/media/cZ7rmKfFYOvYI/200.gif'
+        type: string
+      webp:
+        description: The URL for this GIF in .webp format.
+        example: 'https://media1.giphy.com/media/cZ7rmKfFYOvYI/giphy.webp'
+        type: string
+      webp_size:
+        description: The size in bytes of the .webp file corresponding to this GIF.
+        example: '12321'
+        type: string
+      width:
+        description: The width of this GIF in pixels.
+        example: '320'
+        type: string
+    type: object
+  Meta:
+    description: |
+      The Meta Object contains basic information regarding the request, whether it was successful, and the response given by the API.  Check `responses` to see a description of types of response codes the API might give you under different cirumstances.
+    properties:
+      msg:
+        description: HTTP Response Message
+        example: OK
+        type: string
+      response_id:
+        description: A unique ID paired with this response from the API.
+        example: 57eea03c72381f86e05c35d2
+        type: string
+      status:
+        description: HTTP Response Code
+        example: 200
+        format: int32
+        type: integer
+    type: object
+  Pagination:
+    description: |
+      The Pagination Object contains information relating to the number of total results available as well as the number of results fetched and their relative positions.
+    properties:
+      count:
+        description: Total number of items returned.
+        example: 25
+        format: int32
+        type: integer
+      offset:
+        description: Position in pagination.
+        example: 75
+        format: int32
+        type: integer
+      total_count:
+        description: Total number of items available.
+        example: 250
+        format: int32
+        type: integer
+    type: object
+  User:
+    description: 'The User Object contains information about the user associated with a GIF and URLs to assets such as that user''s avatar image, profile, and more.'
+    properties:
+      avatar_url:
+        description: The URL for this user's avatar image.
+        example: 'https://media1.giphy.com/avatars/election2016/XwYrZi5H87o6.gif'
+        type: string
+      banner_url:
+        description: The URL for the banner image that appears atop this user's profile page.
+        example: 'https://media4.giphy.com/avatars/cheezburger/XkuejOhoGLE6.jpg'
+        type: string
+      display_name:
+        description: The display name associated with this user (contains formatting the base username might not).
+        example: JoeCool4000
+        type: string
+      profile_url:
+        description: The URL for this user's profile.
+        example: 'https://giphy.com/cheezburger/'
+        type: string
+      twitter:
+        description: 'The Twitter username associated with this user, if applicable.'
+        example: '@joecool4000'
+        type: string
+      username:
+        description: The username associated with this user.
+        example: joecool4000
+        type: string
+    type: object
