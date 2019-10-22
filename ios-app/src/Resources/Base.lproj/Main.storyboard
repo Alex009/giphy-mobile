@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="zIh-nI-gcX">
-    <device id="retina4_0" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="zIh-nI-gcX">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,82 +12,21 @@
             <objects>
                 <navigationController id="zIh-nI-gcX" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="aGe-Yj-KQZ">
-                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="tpQ-LY-4wm" kind="relationship" relationship="rootViewController" id="iw1-Xy-f57"/>
+                        <segue destination="rc3-Fb-lqP" kind="relationship" relationship="rootViewController" id="0gf-Yj-ZjT"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dpF-aw-Lyj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-5946" y="-1482"/>
         </scene>
-        <!--moko-app-->
-        <scene sceneID="heM-ap-51W">
-            <objects>
-                <viewController id="tpQ-LY-4wm" customClass="ConfigViewController" customModule="mokoApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="MKQ-Qk-EWk"/>
-                        <viewControllerLayoutGuide type="bottom" id="Ba9-2V-dd9"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bE-ud-soL">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e3l-s2-CcZ" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                <rect key="frame" x="24" y="72" width="272" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="API Token"/>
-                                </userDefinedRuntimeAttributes>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IOd-DU-OXy" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                <rect key="frame" x="24" y="110" width="272" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Language"/>
-                                </userDefinedRuntimeAttributes>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aeS-KV-Tvh">
-                                <rect key="frame" x="135.5" y="148" width="49" height="30"/>
-                                <state key="normal" title="Submit"/>
-                                <connections>
-                                    <action selector="onSubmitPressed" destination="tpQ-LY-4wm" eventType="touchUpInside" id="Dpc-tx-4t3"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="e3l-s2-CcZ" secondAttribute="trailing" constant="8" id="1Ts-bI-3rV"/>
-                            <constraint firstItem="e3l-s2-CcZ" firstAttribute="top" secondItem="MKQ-Qk-EWk" secondAttribute="bottom" constant="8" id="2q8-jl-bVy"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="IOd-DU-OXy" secondAttribute="trailing" constant="8" id="7JH-LL-Gk3"/>
-                            <constraint firstItem="IOd-DU-OXy" firstAttribute="leading" secondItem="8bE-ud-soL" secondAttribute="leadingMargin" constant="8" id="EOF-dj-21b"/>
-                            <constraint firstItem="aeS-KV-Tvh" firstAttribute="centerX" secondItem="8bE-ud-soL" secondAttribute="centerX" id="LIL-Se-txu"/>
-                            <constraint firstItem="IOd-DU-OXy" firstAttribute="top" secondItem="e3l-s2-CcZ" secondAttribute="bottom" constant="8" id="aFX-xh-qpr"/>
-                            <constraint firstItem="e3l-s2-CcZ" firstAttribute="leading" secondItem="8bE-ud-soL" secondAttribute="leadingMargin" constant="8" id="eSZ-5h-x39"/>
-                            <constraint firstItem="aeS-KV-Tvh" firstAttribute="top" secondItem="IOd-DU-OXy" secondAttribute="bottom" constant="8" id="epK-cr-DiB"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="moko-app" id="ftM-lC-K7M"/>
-                    <connections>
-                        <outlet property="languageField" destination="IOd-DU-OXy" id="w2o-7w-Qv9"/>
-                        <outlet property="tokenField" destination="e3l-s2-CcZ" id="4oM-qT-pfl"/>
-                        <segue destination="rc3-Fb-lqP" kind="show" identifier="routeToNews" id="LyH-o7-8X0"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eQs-JZ-rVh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-5033" y="-1482"/>
-        </scene>
-        <!--News View Controller-->
+        <!--Gif List View Controller-->
         <scene sceneID="VGx-eG-QFb">
             <objects>
-                <viewController id="rc3-Fb-lqP" customClass="NewsViewController" customModule="mokoApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="rc3-Fb-lqP" customClass="GifListViewController" customModule="Giphy_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y1O-DX-kvI"/>
                         <viewControllerLayoutGuide type="bottom" id="1nA-E3-pck"/>
@@ -99,7 +36,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="maq-rv-fNa">
-                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="bbj-as-yMb">
@@ -181,6 +118,7 @@
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="a21-Ii-jMd" secondAttribute="trailing" constant="16" id="yI1-xh-6Z3"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="wVu-w6-6ee"/>
                     <connections>
                         <outlet property="activityIndicator" destination="bbj-as-yMb" id="swr-n2-hl9"/>
                         <outlet property="emptyView" destination="SRk-3N-mDE" id="yFL-YE-zAu"/>
@@ -191,7 +129,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J8Y-8w-RAa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4249" y="-1482"/>
+            <point key="canvasLocation" x="-5019" y="-1482"/>
         </scene>
     </scenes>
 </document>

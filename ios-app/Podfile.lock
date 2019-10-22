@@ -25,18 +25,21 @@ PODS:
   - MultiPlatformLibraryUnits/Core (0.1.0):
     - MultiPlatformLibrary
   - SkyFloatingLabelTextField (3.7.0)
+  - SwiftyGif (5.1.1)
 
 DEPENDENCIES:
   - MultiPlatformLibrary (from `../mpp-library`)
   - MultiPlatformLibraryMvvm (from `https://github.com/icerockdev/moko-mvvm.git`, tag `release/0.3.0`)
   - MultiPlatformLibraryResources (from `https://github.com/icerockdev/moko-resources.git`, tag `release/0.3.0`)
   - MultiPlatformLibraryUnits/Core (from `https://github.com/icerockdev/moko-units.git`, tag `release/0.1.0`)
+  - SwiftyGif (= 5.1.1)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - AlamofireImage
     - SkyFloatingLabelTextField
+    - SwiftyGif
 
 EXTERNAL SOURCES:
   MultiPlatformLibrary:
@@ -70,7 +73,8 @@ SPEC CHECKSUMS:
   MultiPlatformLibraryResources: 5cc246020c1b505ff909b4a0851c216847bb92eb
   MultiPlatformLibraryUnits: 44eda0f9372f8a095225fae2579916208ca2c8d3
   SkyFloatingLabelTextField: 4b46db0ab1ccde0919cded29c656e6b4805eda04
+  SwiftyGif: f7702483db93586a41f04f4927cd682852a2fa10
 
-PODFILE CHECKSUM: 75761572cc5ae77a240ebff93419bc5cc27a17df
+PODFILE CHECKSUM: 5b8b0dd61c7626004d89b149ae8c75e7dd5ccedf
 
 COCOAPODS: 1.8.3

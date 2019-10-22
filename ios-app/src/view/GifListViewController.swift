@@ -2,27 +2,26 @@
  * Copyright 2019 IceRock MAG Inc. Use of this source code is governed by the Apache 2.0 license.
  */
 
-import Foundation
 import UIKit
 import MultiPlatformLibrary
 import MultiPlatformLibraryMvvm
 import MultiPlatformLibraryUnits
 
-class NewsViewController: UIViewController {
+class GifListViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private var emptyView: UIView!
     @IBOutlet private var errorView: UIView!
     @IBOutlet private var errorLabel: UILabel!
     
-    private var viewModel: ListViewModel<News>!
+    private var viewModel: ListViewModel<Gif>!
     private var dataSource: FlatUnitTableViewDataSource!
     private var refreshControl: UIRefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel = AppComponent.factory.newsFactory.createListViewModel()
+        viewModel = AppComponent.factory.gifsFactory.createListViewModel()
 
         // binding methods from https://github.com/icerockdev/moko-mvvm
         activityIndicator.bindVisibility(liveData: viewModel.state.isLoadingState())
