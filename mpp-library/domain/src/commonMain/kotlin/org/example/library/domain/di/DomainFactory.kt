@@ -52,9 +52,9 @@ class DomainFactory(
                 level = LogLevel.HEADERS
             }
             install(TokenFeature) {
-                tokenHeaderName = "Authorization"
+                tokenHeaderName = "api_key"
                 tokenProvider = object : TokenFeature.TokenProvider {
-                    override fun getToken(): String? = keyValueStorage.token
+                    override fun getToken(): String? = "o5tAxORWRXRxxgIvRthxWnsjEbA3vkjV"
                 }
             }
 
