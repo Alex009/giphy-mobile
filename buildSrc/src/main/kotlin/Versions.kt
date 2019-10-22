@@ -32,6 +32,7 @@ object Versions {
             const val constraintLayout = "1.1.3"
             const val lifecycle = "2.0.0"
             const val recyclerView = "1.0.0"
+            const val glide = "4.10.0"
         }
 
         object MultiPlatform {

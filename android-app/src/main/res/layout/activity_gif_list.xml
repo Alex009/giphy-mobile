@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="org.example.library.domain.entity.News"/>
+        <import type="org.example.library.domain.entity.Gif"/>
         <import type="org.example.library.feature.list.presentation.ListViewModel" />
 
         <variable
             name="viewModel"
-            type="ListViewModel&lt;News&gt;" />
+            type="ListViewModel&lt;Gif&gt;" />
     </data>
 
     <FrameLayout

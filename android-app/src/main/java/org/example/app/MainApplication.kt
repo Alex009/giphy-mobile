@@ -8,7 +8,7 @@ import android.app.Application
 import android.content.Context
 import com.github.aakira.napier.DebugAntilog
 import com.russhwolf.settings.AndroidSettings
-import org.example.app.units.NewsListUnitsFactory
+import org.example.app.units.GifListUnitsFactory
 import org.example.library.SharedFactory
 
 class MainApplication : Application() {
@@ -26,7 +26,7 @@ class MainApplication : Application() {
             baseUrl = BuildConfig.BASE_URL,
             settings = AndroidSettings(getSharedPreferences("app", Context.MODE_PRIVATE)),
             antilog = DebugAntilog(),
-            newsUnitsFactory = NewsListUnitsFactory()
+            gifsUnitsFactory = GifListUnitsFactory()
         )
     }
 }
